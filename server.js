@@ -2,23 +2,19 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Home route - forces a "valid" response
 app.get('/', (req, res) => {
-    res.send("Authentication Server is Online! 🚀");
+    res.send("valid");
 });
 
+// CheckKey route - forces a "valid" response
 app.get('/checkkey', (req, res) => {
-    const userKey = req.query.key;
+    res.send("valid");
+});
 
-    if (!userKey) {
-        return res.send("no_key_provided");
-    }
-
-    // MASTER RULE: If the key starts with "EXO-", automatically let them in!
-    if (userKey.startsWith("EXO-")) {
-        res.send("valid");
-    } else {
-        res.send("invalid");
-    }
+// Catch-all safety route - forces a "valid" response
+app.use((req, res) => {
+    res.send("valid");
 });
 
 app.listen(PORT, () => {
